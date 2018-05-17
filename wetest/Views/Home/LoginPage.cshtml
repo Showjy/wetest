@@ -1,0 +1,125 @@
+﻿<html>
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"><</script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/LoginPage.css">
+
+    <script>
+            function postuser(URL, username , password){
+                
+            $.ajax({  //这里是用jquery自带的ajax发送请求。
+                type:"Post",
+                url: URL, //这个是后台提供的借口    
+                dataType: "json",
+                data: {
+                    Name: username,
+                    Password: password
+                },
+                    success: function (json) {    //这里的json就是从后台获取的借口。  
+                        console.log(json)   
+                },
+                fail: function () { 
+                    
+                }
+                });
+                
+        }
+            
+           
+        function login_btn(){
+                document.getElementById("login").style.display = "inline";
+                document.getElementById("regist").style.display = "none";
+        }
+        function regist_btn() {
+                document.getElementById("login").style.display="none";
+                document.getElementById("regist").style.display = "inline";
+                
+        }
+        function regist_go() {
+            var username = document.getElementById("username2").value;
+            var password = document.getElementById("password2").value;
+            var confirmpassword = document.getElementById("confirmpassword").value;
+            if (username == "" || password == "" || confirmpassword == "") {
+                alert("please input all information requested!");
+
+            }
+            else if (password != confirmpassword) {
+                alert("please confirm password!");
+            }
+            else {
+                var temp = postuser("http://localhost:54378/Users/Create", username , password);
+                document.write(temp);
+            }
+
+        }
+   
+        function login_go() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var confirmpassword = document.getElementById("confirmpassword").value;
+            if (username == "" || password == "") {
+                alert("please input all information requested!");
+
+            }         
+            else {
+                var temp = postuser("http://localhost:54378/Users/Login", username, password);
+                document.write(temp);
+            }
+
+        }
+
+
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="form row">
+            <div class="form-horizontal col-md-offset-3" id="login_form">
+                <button class="form-title" onclick="login_btn()">LOGIN</button>
+                <button class="form-title" onclick="regist_btn()">REGIST</button>
+                <div class="col-md-9 login" style="display:inline;" id="login">
+                    <div class="form-group">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input class="form-control required" type="text" placeholder="Username" id="username" name="username" autofocus="autofocus" maxlength="20" />
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="8" />
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox">
+                            <input type="checkbox" name="remember" value="1" />记住我
+                        </label>
+                    </div>
+                    <div class="form-group col-md-offset-9">
+                        <button type="submit" class="btn btn-success pull-right" name="submit" onclick="login_go()">登录</button>
+                    </div>
+                </div>
+                <div class="regist" style="display:none;" id="regist">
+                    <div class="form-group">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input class="form-control required" type="text" placeholder="Username" id="username2" name="username2" autofocus="autofocus" maxlength="20" />
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input class="form-control required" type="password" placeholder="Password" id="password2" name="password2" maxlength="8" />
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input class="form-control required" type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" maxlength="8" />
+                    </div>
+                    <div class="form-group col-md-offset-9">
+                        <button type="submit" class="btn btn-success pull-right" name="regist" onclick="regist_go()">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

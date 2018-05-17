@@ -1,0 +1,44 @@
+﻿
+.container {
+    display:flex;
+    flex-direction:row;
+}
+
+#logo {
+ position:absolute;
+ left:0em;
+ top:0em;
+}
+
+#nav {
+ right: 1em;
+ top: 1.1em;
+}
+
+.jumptotest{
+ right:1em;
+}
+
+.userphoto {
+    position:absolute;
+    right:0em;
+}
+
+.items {
+border:solid;
+left:0em;
+top:5em;
+}
+
+.item.sellerphoto {
+position:absolute;
+left:0em;
+top:0em;
+}
+
+.item.information{
+    left:1em;
+    top:0em;
+    display:flex;
+    flex-direction:column;
+}

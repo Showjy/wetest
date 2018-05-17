@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserPage</title>
+    <link href="~/css/BuyerPage.css" rel="stylesheet"></link>
+    <script>
+        window.onload = function getCookie() {
+            var arr, reg = new RegExp("(^| )" + "Name" + "=([^;]*)(;|$)");
+            var item = document.getElementsByClassName("name");
+            if (arr = document.cookie.match(reg))
+                item.innerHTML = arr;
+            else
+                item.innerHTML = "false";
+        }
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div class="container">
+            <div id="logo">
+                <h1>Logo</h1>
+            </div>
+            <div class="jumptotest">
+                <a href="">我是测试</a>
+            </div>
+            <div id="nav">
+                <ul>
+                    <li>
+                        <a href="">项目跟进</a>
+                    </li>
+                    <li>
+                        <a href="">订单历史</a>
+                    </li>
+                    <li>
+                        <a href="">我的详情</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="userphoto">photohere</div>
+        </div>
+    </div>
+    <div class="items">
+        <div class="item">
+            <div class="sellerphoto">photohere</div>
+            <div class="information">
+                <div class="name">111</div>
+                <div class="intro">hehehehehehehehhehehehehehehhe</div>
+                <button>anniu</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

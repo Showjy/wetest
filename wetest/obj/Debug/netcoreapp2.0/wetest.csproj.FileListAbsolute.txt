@@ -1,0 +1,11 @@
+C:\Users\Yangxj\source\repos\wetest\wetest\bin\Debug\netcoreapp2.0\wetest.deps.json
+C:\Users\Yangxj\source\repos\wetest\wetest\bin\Debug\netcoreapp2.0\wetest.runtimeconfig.json
+C:\Users\Yangxj\source\repos\wetest\wetest\bin\Debug\netcoreapp2.0\wetest.runtimeconfig.dev.json
+C:\Users\Yangxj\source\repos\wetest\wetest\bin\Debug\netcoreapp2.0\wetest.dll
+C:\Users\Yangxj\source\repos\wetest\wetest\obj\Debug\netcoreapp2.0\wetest.csprojResolveAssemblyReference.cache
+C:\Users\Yangxj\source\repos\wetest\wetest\obj\Debug\netcoreapp2.0\wetest.csproj.CoreCompileInputs.cache
+C:\Users\Yangxj\source\repos\wetest\wetest\obj\Debug\netcoreapp2.0\wetest.AssemblyInfoInputs.cache
+C:\Users\Yangxj\source\repos\wetest\wetest\obj\Debug\netcoreapp2.0\wetest.AssemblyInfo.cs
+C:\Users\Yangxj\source\repos\wetest\wetest\bin\Debug\netcoreapp2.0\wetest.pdb
+C:\Users\Yangxj\source\repos\wetest\wetest\obj\Debug\netcoreapp2.0\wetest.dll
+C:\Users\Yangxj\source\repos\wetest\wetest\obj\Debug\netcoreapp2.0\wetest.pdb
