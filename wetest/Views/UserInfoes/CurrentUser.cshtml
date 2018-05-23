@@ -1,0 +1,81 @@
+﻿@model wetest.Models.models.UserInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>CurrentUser</title>
+
+
+    <script>
+        function update_go() {
+            var email = document.getElementById("email").value;
+            var phonenumber = document.getElementById("phonenumber").value;
+            var temp = update("http://localhost:54378/UserInfoes/Edit", email, phonenumber);
+
+
+            if (temp == "result=\"EditUserInfoSuccess\"") {
+                alert("Edit Success!");
+                window.location.href = "http://localhost:54378/UserInfoes/CurrentUser";
+            }
+            else if (temp == "result=\"EditInfoFail\"") {
+                alert("Edit Fail! Please check your input");
+            }
+            else if (temp == "result=\"DonotFindUserID\"") {
+                alert("身份认证失败！")；
+
+            }
+            else {
+                alert("未知错误！")；
+
+            }
+
+        }
+
+        function update(URL, email, phonenumber) {
+            var result;
+            $.ajax({
+                type: "Post",
+                url: URL,
+                async: false,
+                dataType: "json",
+                data: {
+                    PhoneNumber: phonenumber,
+                    Email: email
+                },
+                success: function (json) {
+                    result = json
+                },
+                fail: function () {
+
+                }
+            });
+            return result;
+
+        }
+    </script>
+</head>
+<body>
+    <h3>@Model.Email</h3>
+    <h3>@Model.PhoneNumber</h3>
+    <h3>@Model.RegistDate</h3>
+    <div class="form-group">
+        <i class="fa fa-user fa-lg"></i>
+        <h3>Email</h3>
+        <input class="form-control required" type="text" placeholder="@Model.Email" id="email" autofocus="autofocus" maxlength="20" />
+    </div>
+    <div class="form-group">
+        <i class="fa fa-lock fa-lg"></i>
+        <h3>PhoneNumber</h3>
+        <input class="form-control required" type="text" placeholder="@Model.PhoneNumber" id="phonenumber" maxlength="8" />
+    </div>
+    <h3>RegistDate</h3>
+    <h3>@Model.RegistDate</h3>
+    <button onclick="update_go()">Update</button>
+</body>
+</html>

@@ -1,77 +1,100 @@
-﻿<html>
+﻿@using wetest.Models.viewmodels
+@model UserRegistViewModel
+@{
+    Layout = null;
+}
+<html>
 <head>
     <meta charset="UTF-8">
     <title>login</title>
 
-    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"><</script>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/css/LoginPage.css">
 
     <script>
-            function postuser(URL, username , password){
-                
-            $.ajax({  //这里是用jquery自带的ajax发送请求。
-                type:"Post",
-                url: URL, //这个是后台提供的借口    
+        function postuser(URL, username, password){
+            var result;
+            $.ajax({  
+                type: "Post",
+                url: URL, 
+                async: false, 
                 dataType: "json",
                 data: {
                     Name: username,
                     Password: password
                 },
-                    success: function (json) {    //这里的json就是从后台获取的借口。  
-                        console.log(json)   
+                success: function (json) {    
+                    console.log(json)
+                    result=json
                 },
-                fail: function () { 
-                    
+                fail: function () {
+
                 }
-                });
-                
+            });
+            return result;
         }
-            
-           
-        function login_btn(){
-                document.getElementById("login").style.display = "inline";
-                document.getElementById("regist").style.display = "none";
-        }
-        function regist_btn() {
-                document.getElementById("login").style.display="none";
-                document.getElementById("regist").style.display = "inline";
-                
-        }
-        function regist_go() {
-            var username = document.getElementById("username2").value;
-            var password = document.getElementById("password2").value;
-            var confirmpassword = document.getElementById("confirmpassword").value;
-            if (username == "" || password == "" || confirmpassword == "") {
-                alert("please input all information requested!");
 
-            }
-            else if (password != confirmpassword) {
-                alert("please confirm password!");
-            }
-            else {
-                var temp = postuser("http://localhost:54378/Users/Create", username , password);
-                document.write(temp);
-            }
+        function get(URL) {
 
+            $.ajax({  
+                type: "Get",
+                url: URL, 
+                success: function (json) {   
+                    console.log(json)            
+                },
+                fail: function () {
+
+                }
+            });   
         }
-   
-        function login_go() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            var confirmpassword = document.getElementById("confirmpassword").value;
-            if (username == "" || password == "") {
-                alert("please input all information requested!");
 
-            }         
-            else {
-                var temp = postuser("http://localhost:54378/Users/Login", username, password);
-                document.write(temp);
-            }
+    function login_btn() {
+        document.getElementById("login").style.display = "inline";
+        document.getElementById("regist").style.display = "none";
+    }
+    function regist_btn() {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("regist").style.display = "inline";
+
+    }
+    function regist_go() {
+        var username = document.getElementById("username2").value;
+        var password = document.getElementById("password2").value;
+        var confirmpassword = document.getElementById("confirmpassword").value;
+        if (username == "" || password == "" || confirmpassword == "") {
+            alert("please input all information requested!");
 
         }
+        else if (password != confirmpassword) {
+            alert("please confirm password!");
+        }
+        else {
+            var temp = postuser("http://localhost:54378/Users/Create", username, password);
+        }
+        
+    }
+
+    function login_go() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var confirmpassword = document.getElementById("confirmpassword").value;
+        if (username == "" || password == "") {
+            alert("please input all information requested!");
+
+        }
+        else {
+            var temp = postuser("http://localhost:54378/Users/Login", username, password);
+        }
+
+        if (temp == "result=\"LoginSuccess\"") {
+
+            window.location.href="http://localhost:54378/Home/BuyerPage";
+        }
+        
+    }
 
 
     </script>
@@ -86,11 +109,11 @@
                 <div class="col-md-9 login" style="display:inline;" id="login">
                     <div class="form-group">
                         <i class="fa fa-user fa-lg"></i>
-                        <input class="form-control required" type="text" placeholder="Username" id="username" name="username" autofocus="autofocus" maxlength="20" />
+                        <input class="form-control required" asp-for="Name" type="text" placeholder="Username" id="username" name="username" autofocus="autofocus" maxlength="20" />
                     </div>
                     <div class="form-group">
                         <i class="fa fa-lock fa-lg"></i>
-                        <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="8" />
+                        <input class="form-control required" asp-for="Password" type="password" placeholder="Password" id="password" name="password" maxlength="8" />
                     </div>
                     <div class="form-group">
                         <label class="checkbox">

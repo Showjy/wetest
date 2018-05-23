@@ -53,7 +53,7 @@ namespace wetest.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Information")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,Price,StartData,EndData,Information,Status")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace wetest.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Information")] Order order)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Price,StartData,EndData,Information,Status")] Order order)
         {
             if (id != order.Id)
             {

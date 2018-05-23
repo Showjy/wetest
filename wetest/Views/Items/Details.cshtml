@@ -1,0 +1,40 @@
+﻿@model wetest.Models.Item
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <h4>Item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Information)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Information)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a href="/Orders/Create">Contect</a>
+    <a href="/Orders/Create">Buy</a>
+    <a href="/Home/BuyerPage">Back</a>
+</div>
+</body>
+</html>

@@ -1,21 +1,16 @@
-﻿
+﻿@using wetest.Models.models
+@model IEnumerable<wetest.Models.Item>
+
 @{
     Layout = null;
 }
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>UserPage</title>
-    <link href="~/css/BuyerPage.css" rel="stylesheet"></link>
+    <title>BuyerPage</title>
+    <link href="~/css/BuyerPage.css" rel="stylesheet"/>
     <script>
-        window.onload = function getCookie() {
-            var arr, reg = new RegExp("(^| )" + "Name" + "=([^;]*)(;|$)");
-            var item = document.getElementsByClassName("name");
-            if (arr = document.cookie.match(reg))
-                item.innerHTML = arr;
-            else
-                item.innerHTML = "false";
-        }
+
     </script>
 </head>
 <body>
@@ -36,7 +31,7 @@
                         <a href="">订单历史</a>
                     </li>
                     <li>
-                        <a href="">我的详情</a>
+                        <a href="/UserInfoes/CurrentUser">我的详情</a>
                     </li>
 
                 </ul>
@@ -44,15 +39,21 @@
             <div class="userphoto">photohere</div>
         </div>
     </div>
-    <div class="items">
-        <div class="item">
-            <div class="sellerphoto">photohere</div>
-            <div class="information">
-                <div class="name">111</div>
-                <div class="intro">hehehehehehehehhehehehehehehhe</div>
-                <button>anniu</button>
+    
+   @foreach (var item in Model)
+    {
+        <div class="items">
+            <div class="item">
+
+                <h4 class="title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                <h5 class="information"> @Html.DisplayFor(modelItem => item.Information)</h5>
+                <a href="/Items/Details/@item.Id">Details</a>
+                
             </div>
         </div>
-    </div>
+     }
+    
 </body>
+    
+
 </html>

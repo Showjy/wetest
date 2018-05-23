@@ -32,11 +32,12 @@ namespace wetest
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
         {
-            o.LoginPath = new PathString("/Users/Login");
-            o.AccessDeniedPath = new PathString("/Users/Login");
+            o.LoginPath = new PathString("/Home/LoginPage");
+            o.AccessDeniedPath = new PathString("/Home/LoginPage");
             o.Cookie.Name = "My_SessionName";
         });
 
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +59,7 @@ namespace wetest
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=LoginPage}/{id?}");
+                    template: "{controller=Home}/{action=BuyerPage}/{id?}");
             });
 
            

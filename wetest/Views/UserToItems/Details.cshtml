@@ -1,0 +1,39 @@
+﻿@model wetest.Models.relatmodels.UserToItem
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <h4>UserToItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SellerId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SellerId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</body>
+</html>

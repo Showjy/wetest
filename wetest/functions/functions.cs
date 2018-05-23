@@ -7,6 +7,7 @@ namespace wetest.functions
 {
     public class Functions
     {
+        
         public static string ChangeCounttoId(long count)
         {
             string temp = count.ToString();

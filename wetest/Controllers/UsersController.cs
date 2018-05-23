@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wetest.Models;
+using wetest.Models.models;
 using wetest.Models.viewmodels;
 
 namespace wetest.Controllers
@@ -27,15 +28,18 @@ namespace wetest.Controllers
         {
             return View(await _context.Users.ToListAsync());
         }
-        public IActionResult Login()
+       
+       
+        public string CurrentUser()
         {
-            return View();
+            return User.Identity.Name;
         }
-
+        
 
         [HttpPost]
         public async Task<IActionResult> Login([Bind("Name,Password")]UserRegistViewModel userLogin)
         {
+            
             var password = (from p in _context.Users
                            where p.Name == userLogin.Name
                            select p.Password);           
@@ -60,15 +64,11 @@ namespace wetest.Controllers
                     // sign-in
                     await HttpContext.SignInAsync(
                             scheme: CookieAuthenticationDefaults.AuthenticationScheme,
-                            principal: principal,
-                            properties: new AuthenticationProperties
-                            {
-                                ExpiresUtc = DateTime.UtcNow.AddMinutes(1)
-                            }
+                            principal: principal
                             );
 
 
-                    return RedirectToPage("/BuyerPage","Home");
+                    return Json("result=\"LoginSuccess\"");
 
                 }
                 else {
@@ -76,13 +76,9 @@ namespace wetest.Controllers
                 }
                 
             }
-            
             return Json("result=\"LoginFail\";user=\""+userLogin.Name+"\"");
             
-        }
-
-       
-   
+        }       
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(
@@ -90,11 +86,6 @@ namespace wetest.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
-
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -136,13 +127,23 @@ namespace wetest.Controllers
                 {
                     var count = (from usr in _context.Users
                                  select usr).Count();
-
+                    //添加User
                     string id = functions.Functions.ChangeCounttoId((long)count + 1);
                     user.Id = id;
                     user.Name = userRegist.Name;
                     user.Password = userRegist.Password;
                     _context.Add(user);
+                    
+
+                    //初始化UserInfo
+                    UserInfo info = new UserInfo();
+                    info.Id = id;
+                    info.Email = "";
+                    info.PhoneNumber = "";
+                    info.RegistDate = System.DateTime.Now.ToShortDateString();
+                    _context.Add(info);
                     await _context.SaveChangesAsync();
+
                     return Json("result=\"CreateUserSuccess\"");
                   
                 }
@@ -171,17 +172,10 @@ namespace wetest.Controllers
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Contect")] User user)
-        {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
-
+        public async Task<IActionResult> Edit([Bind("Id,Name,Password")] User user)
+        {         
             if (ModelState.IsValid)
             {
                 try
@@ -234,6 +228,14 @@ namespace wetest.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public string NameToId(string name)
+        {
+            var ids = (from p in _context.Users
+                       where p.Name == name
+                       select p);
+            var id = ids.FirstOrDefault().Id;
+            return id;
+        }
         private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
