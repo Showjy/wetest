@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateOrder</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        function create_on(providerid) {
+            var price = document.getElementById("Price").value;
+            var startdate = document.getElementById("StartDate").value;
+            var enddate = document.getElementById("EndDate").value;
+            var information = document.getElementById("Information").value;
+            var providerid = "@ViewData["ProviderId"]";
+            if (price == "" || startdate == "" || enddate == "" || information == "" || providerid == "") {
+                alert("please input all information requested!");
+            }
+            else {
+                var temp = create("http://localhost:54378/Orders/Create", price, startdate, enddate, information, providerid);
+            }
+
+
+            if (temp == "result=\"CreateOrderSuccess\"") {
+
+                window.location.href = "http://localhost:54378/Orders/ShowMyOrders";
+            }
+            else if (temp == "result=\"YouCannotRecieveYourOwnOrder\"") {
+                alert("YouCannotRecieveYourOwnOrder!");
+            }
+            else {
+                alert("CreateFail!");
+            }
+
+        }
+
+        function create(URL, price, startdate, enddate, information, providerid) {
+            var result;
+            $.ajax({
+                type: "Post",
+                url: URL,
+                async: false,
+                dataType: "json",
+                data: {
+                    ProviderId: providerid,
+                    Price: price,
+                    StartDate: startdate,
+                    EndDate: enddate,
+                    Information: information
+
+                },
+                success: function (json) {
+                    console.log(json)
+                    result = json
+                },
+                fail: function () {
+
+                }
+            });
+            return result;
+
+        }
+    </script>
+</head>
+<body>
+    <h3>@ViewData["ProviderId"]</h3>
+    <div class="form-group">
+        <i class="fa fa-user fa-lg"></i>
+        <input class="form-control required" type="text" placeholder="Price" id="Price" autofocus="autofocus" maxlength="20" />
+    </div>
+    <div class="form-group">
+        <i class="fa fa-user fa-lg"></i>
+        <input class="form-control required" type="text" placeholder="StartDate" id="StartDate" autofocus="autofocus" maxlength="20" />
+    </div>
+    <div class="form-group">
+        <i class="fa fa-user fa-lg"></i>
+        <input class="form-control required" type="text" placeholder="EndDate" id="EndDate" autofocus="autofocus" maxlength="20" />
+    </div>
+    <div class="form-group">
+        <i class="fa fa-user fa-lg"></i>
+        <input class="form-control required" type="text" placeholder="Information" id="Information" autofocus="autofocus" maxlength="20" />
+    </div>
+    <button onclick="create_on()">创建订单</button>
+</body>
+</html>

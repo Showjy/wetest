@@ -30,13 +30,22 @@ namespace wetest.Controllers
         [Authorize]
         public async Task<IActionResult> BuyerPage()
         {
-            return View(await _context.Items.ToListAsync());
+            var validItem = (from p in _context.Items
+                             where p.status == "valid"
+                             select p);
+            return View(await validItem.ToListAsync());
         }
 
-        public ViewResult TesterPage()
+        [Authorize]
+        public async Task<IActionResult> TesterPage()
         {
-
-            return View("TesterPage");
+            string currentid = User.Identity.Name;
+            
+            var items = (from t in _context.Items 
+                         from p in _context.UserToItem                         
+                         where currentid == p.SellerId && p.ItemId==t.Id && t.status == "valid"
+                         select t);
+            return View(await items.ToListAsync());
         }
         
         public IActionResult Error()

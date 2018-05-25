@@ -42,7 +42,11 @@ namespace wetest.Controllers
             
             var password = (from p in _context.Users
                            where p.Name == userLogin.Name
-                           select p.Password);           
+                           select p.Password);
+            var ids = (from p in _context.Users
+                            where p.Name == userLogin.Name
+                            select p.Id);
+            string id = ids.FirstOrDefault();
             if (password.Count()==1)
             {
                 if (password.Contains(userLogin.Password))
@@ -50,10 +54,8 @@ namespace wetest.Controllers
 
                     List<Claim> claims = new List<Claim>
                     {
-
-                     new Claim(ClaimTypes.Name, userLogin.Name)
+                     new Claim(ClaimTypes.Name, id)
                     };
-
 
                     // create identity
                     ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
@@ -66,17 +68,13 @@ namespace wetest.Controllers
                             scheme: CookieAuthenticationDefaults.AuthenticationScheme,
                             principal: principal
                             );
-
-
                     return Json("result=\"LoginSuccess\"");
-
                 }
                 else {
                     return Json("result=\"NoSuchUser\"");
-                }
-                
+                }   
             }
-            return Json("result=\"LoginFail\";user=\""+userLogin.Name+"\"");
+            return NotFound();
             
         }       
         public async Task<IActionResult> Logout()
@@ -112,8 +110,6 @@ namespace wetest.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Name,Password")] Models.viewmodels.UserRegistViewModel userRegist)
         {

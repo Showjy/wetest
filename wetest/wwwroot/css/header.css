@@ -1,0 +1,37 @@
+﻿#head {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    z-index: 301;
+    min-width: 1000px;
+    background: #fff;
+    border-bottom: 1px solid #ebebeb;
+    position: fixed;
+}
+#u {
+    z-index: 301;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 21px 9px 5px 0;
+    padding: 0;
+}
+
+#u {
+    color: #999;
+    white-space: nowrap;
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    z-index: 299;
+}
+
+#u, #head, #tool, #search, #foot {
+    font-size: 12px;
+}
+#u a {
+    text-decoration: underline;
+    color: #333;
+    margin: 0 7px;
+}

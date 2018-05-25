@@ -34,7 +34,7 @@ namespace wetest
         {
             o.LoginPath = new PathString("/Home/LoginPage");
             o.AccessDeniedPath = new PathString("/Home/LoginPage");
-            o.Cookie.Name = "My_SessionName";
+            o.Cookie.Name = "My_SessionID";
         });
 
             services.AddSession();

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using wetest.Models;
@@ -11,9 +10,10 @@ using wetest.Models;
 namespace wetest.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180524074711_migrations_003")]
+    partial class migrations_003
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,21 +57,15 @@ namespace wetest.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EndDate");
+                    b.Property<string>("EndData");
 
                     b.Property<string>("Information");
 
-                    b.Property<long>("Price");
+                    b.Property<string>("Price");
 
-                    b.Property<string>("ProviderId");
-
-                    b.Property<string>("ServicerId");
-
-                    b.Property<string>("StartDate");
+                    b.Property<string>("StartData");
 
                     b.Property<string>("Status");
-
-                    b.Property<int>("progress");
 
                     b.HasKey("Id");
 

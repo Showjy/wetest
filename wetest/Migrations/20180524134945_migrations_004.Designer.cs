@@ -11,9 +11,10 @@ using wetest.Models;
 namespace wetest.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180524134945_migrations_004")]
+    partial class migrations_004
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,17 +58,13 @@ namespace wetest.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EndDate");
+                    b.Property<string>("EndData");
 
                     b.Property<string>("Information");
 
-                    b.Property<long>("Price");
+                    b.Property<string>("Price");
 
-                    b.Property<string>("ProviderId");
-
-                    b.Property<string>("ServicerId");
-
-                    b.Property<string>("StartDate");
+                    b.Property<string>("StartData");
 
                     b.Property<string>("Status");
 

@@ -13,6 +13,8 @@ namespace wetest.Models
 
         public string Information { get; set; }
 
+        public string status { get; set; }
+
      
     }
 }

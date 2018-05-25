@@ -47,14 +47,14 @@ namespace wetest.Controllers
 
         public IActionResult CurrentUser()
         {
-            string name = User.Identity.Name;
-            var ids = (from p in _context.Users
-                       where p.Name == name
-                       select p.Id);
-            string currentid = ids.FirstOrDefault();
+            string id = User.Identity.Name;
+            //var names = (from p in _context.Users
+            //           where p.Id == id
+            //           select p.Name);
+            //string currentname = names.FirstOrDefault();
 
             var userInfo = (from p in _context.UserInfo
-                            where currentid == p.Id
+                            where id == p.Id
                             select p);
             if (userInfo == null)
             {
@@ -69,11 +69,11 @@ namespace wetest.Controllers
         [Route("/UserInfoes/Details/{id?}")]
         public IActionResult Details(string id)
         {
-            string name = User.Identity.Name;
-            var ids = (from p in _context.Users
-                       where p.Name == name
-                       select p.Id);
-            string currentid = ids.FirstOrDefault();
+            //string name = User.Identity.Name;
+            //var ids = (from p in _context.Users
+            //           where p.Name == name
+            //           select p.Id);
+            string currentid = User.Identity.Name;
             if(currentid != id)
             {
                 return NotFound();
@@ -137,19 +137,20 @@ namespace wetest.Controllers
         {
             
             if (ModelState.IsValid)
-            {   UserInfo info = new UserInfo();
-                string name = User.Identity.Name;
-                var ids = (from p in _context.Users
-                           where p.Name == name
-                           select p.Id);
-                string id = ids.FirstOrDefault();
+            {
+                UserInfo info = new UserInfo();
+                //string name = User.Identity.Name;
+                //var ids = (from p in _context.Users
+                //           where p.Name == name
+                //           select p.Id);
+                string id = User.Identity.Name;
                 if (UserInfoExists(id))
                 {
-                    var ifexist = (from p in _context.UserInfo
+                    var user = (from p in _context.UserInfo
                                    where id == p.Id
                                    select p);
-                    ifexist.First().PhoneNumber = userInfo.PhoneNumber;
-                    ifexist.First().Email = userInfo.Email;
+                    user.First().PhoneNumber = userInfo.PhoneNumber;
+                    user.First().Email = userInfo.Email;
                     await _context.SaveChangesAsync();
 
                     return Json("result=\"EditUserInfoSuccess\"");

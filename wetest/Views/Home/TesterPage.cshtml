@@ -1,4 +1,6 @@
-﻿
+﻿@using wetest.Models.models
+@model IEnumerable<wetest.Models.Item>
+
 @{
     Layout = null;
 }
@@ -9,8 +11,102 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>TesterPage</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="~/css/BuyerPage.css" rel="stylesheet" />
+    <script>
+
+        function create_go() {           
+            var title = document.getElementById("title").value;
+            var infor = document.getElementById("information").value;
+            if (title == "" || infor == "") {
+                alert("please input all information requested!");
+
+            }
+            else {
+                var temp = create("http://localhost:54378/Items/Create", title, infor);
+            }
+            if (temp == "result=\"CreateItemSuccess\"") {
+                alert("CreateItemSuccess");
+                window.location.href = "http://localhost:54378/Home/TesterPage";
+            }
+            else {
+                alert("CreateItemFail");
+
+            }
+        }
+
+        function create(URL, title, infor) {
+            var result;
+            $.ajax({
+                type: "Post",
+                url: URL,
+                async: false,
+                dataType: "json",
+                data: {
+                    Title: title,
+                    Information: infor
+                },
+                success: function (json) {
+                    console.log(json)
+                    result = json
+                },
+                fail: function () {
+
+                }
+            });
+            return result;
+
+        }
+
+        function delete_item(event) {
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:54378/Items/ChangeToInvalid",
+                async: false,
+                dataType: "json",
+                data: {
+                    id:event.target.id
+                },
+                success: function (json) {
+                    console.log(json)
+                    window.location.href = "http://localhost:54378/Home/TesterPage";
+                },
+                fail: function () {
+
+                }
+            });            
+
+        }
+
+
+
+
+    </script>
 </head>
 <body>
     <h1>tester page!</h1>
+    <div class="create-mode">
+        <div class="form-group">
+            <i class="fa fa-user fa-lg"></i>
+            <input class="form-control required" placeholder="Title" id="title" autofocus="autofocus" maxlength="20" />
+        </div>
+        <div class="form-group">
+            <i class="fa fa-lock fa-lg"></i>
+            <input class="form-control required" placeholder="Infomation" id="information" />
+        </div>
+        <button onclick="create_go()">CreateItem</button>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="items">
+            <div class="item">
+
+                <h4 class="title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                <h5 class="information"> @Html.DisplayFor(modelItem => item.Information)</h5>
+                <button id="@item.Id" onclick="delete_item(event)" >delete</button>                
+            </div> 
+        </div>
+    }
 </body>
 </html>

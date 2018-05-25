@@ -67,7 +67,8 @@ namespace wetest.Controllers
                 newItem.Id = id;
                 newItem.Title = item.Title;
                 newItem.Information = item.Information;
-                _context.Add(item);
+                newItem.status = "valid";
+                _context.Add(newItem);
 
                 UserToItem uti = new UserToItem();
                 var count2 = (from p in _context.UserToItem
@@ -75,15 +76,11 @@ namespace wetest.Controllers
                 string id2= functions.Functions.ChangeCounttoId((long)count2 + 1);
                 uti.Id = id2;
                 uti.ItemId = id;
-
-                var searchid = (from p in _context.Users
-                                where p.Name == User.Identity.Name
-                                select p.Id);
-                uti.SellerId = searchid.FirstOrDefault();
+                uti.SellerId = User.Identity.Name;
                 _context.Add(uti);
 
                 await _context.SaveChangesAsync();
-                return Json("result=\"CreateItemSuccess\""); ;
+                return Json("result=\"CreateItemSuccess\""); 
             }
             return View(item);
         }
@@ -105,67 +102,65 @@ namespace wetest.Controllers
         }
 
         // POST: Items/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Title,Information")] Item item)
-        {
-            if (id != item.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(item);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ItemExists(item.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(item);
-        }
+        //public async Task<IActionResult> Edit([Bind("Title,Information")] Models.viewmodels.ItemCreateViewModel itemEdit)
+        //{
+        //    if (id != item.Id)
+        //    {
+        //        return NotFound();
+        //    }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(item);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ItemExists(item.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(item);
+        //}
 
         // GET: Items/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> DeleteItem(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var item = await _context.Items
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+        //    var item = await _context.Items
+        //        .SingleOrDefaultAsync(m => m.Id == id);
+        //    if (item == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(item);
-        }
+        //    return View(item);
+        //}
 
         // POST: Items/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [HttpPost]
+        public IActionResult ChangeToInvalid(string id)
         {
-            var item = await _context.Items.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Items.Remove(item);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var items = (from p in _context.Items
+                         where id == p.Id
+                         select p);
+            var item = items.FirstOrDefault();
+            item.status = "Invalid";
+            _context.SaveChanges();
+            return Json("result=\"DeleteItemSuccess\"");
         }
 
         private bool ItemExists(string id)

@@ -8,35 +8,32 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>BuyerPage</title>
-    <link href="~/css/BuyerPage.css" rel="stylesheet"/>
+    <link href="~/css/BuyerPage.css" rel="stylesheet" />
+    <link href="~/css/header.css" rel="stylesheet" />
     <script>
 
     </script>
 </head>
 <body>
-    <div id="header">
+    <div id="head">
         <div class="container">
             <div id="logo">
-                <h1>Logo</h1>
-            </div>
-            <div class="jumptotest">
-                <a href="">我是测试</a>
-            </div>
-            <div id="nav">
+                <h4>Logo</h4>
+            </div>            
+            <div id="u">
                 <ul>
                     <li>
-                        <a href="">项目跟进</a>
+                        <a href="http://localhost:54378/Home/TesterPage">服务需求</a>
                     </li>
                     <li>
-                        <a href="">订单历史</a>
+                        <a href="/Orders/ShowMyOrders">订单历史</a>
                     </li>
                     <li>
                         <a href="/UserInfoes/CurrentUser">我的详情</a>
                     </li>
 
                 </ul>
-            </div>
-            <div class="userphoto">photohere</div>
+            </div>        
         </div>
     </div>
     
@@ -47,7 +44,7 @@
 
                 <h4 class="title">@Html.DisplayFor(modelItem => item.Title)</h4>
                 <h5 class="information"> @Html.DisplayFor(modelItem => item.Information)</h5>
-                <a href="/Items/Details/@item.Id">Details</a>
+                <button href="/Items/Details/@item.Id">Details</button>
                 
             </div>
         </div>
