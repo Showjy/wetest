@@ -64,6 +64,10 @@ namespace wetest.Controllers
             return View(userInfo.FirstOrDefault());
         }
 
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
 
         [HttpPost]
         [Route("/UserInfoes/Details/{id?}")]

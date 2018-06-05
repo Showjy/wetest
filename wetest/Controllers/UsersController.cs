@@ -82,7 +82,7 @@ namespace wetest.Controllers
             await HttpContext.SignOutAsync(
                     scheme: CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("../Home/LoginPage");
         }
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string id)
@@ -150,6 +150,30 @@ namespace wetest.Controllers
             }
             return View(user);
         }
+
+
+        public async Task<IActionResult> ChangePassword([Bind("Before,After")] Models.viewmodels.PasswordChangeViewModel passwordChange)
+        {
+            var id = User.Identity.Name;
+            var users = (from p in _context.Users
+                        where p.Id == id
+                        select p);
+            var user = users.FirstOrDefault();
+            if (passwordChange.Before == user.Password)
+            {
+                user.Password = passwordChange.After;
+                await _context.SaveChangesAsync();
+
+                return Json("result=\"EditPasswordSuccess\"");
+
+            }
+            else
+            {
+                return Json("result=\"EditPasswordFail\"");
+
+            }
+        }
+
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(string id)

@@ -91,7 +91,7 @@ namespace wetest.Controllers
             var order = orders.First();
             order.Status = "open";
             await _context.SaveChangesAsync();
-            return Json("result=\"RefuseOrderSuccess\"");
+            return Json("result=\"AcceptOrderSuccess\"");
         }
 
         public async Task<IActionResult> OrderFinish(string id)
@@ -114,7 +114,7 @@ namespace wetest.Controllers
             var order = orders.First();
             order.progress = orderProgress.Progress;
             await _context.SaveChangesAsync();
-            return Json("result=\"ModProgressSuccess\"");
+            return Json("result=\"ChangeProgressSuccess\"");
         }
 
         // GET: Orders/Create

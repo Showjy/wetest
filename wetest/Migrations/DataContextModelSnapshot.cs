@@ -36,6 +36,30 @@ namespace wetest.Migrations
                     b.ToTable("Items");
                 });
 
+            modelBuilder.Entity("wetest.Models.models.Payment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppealDate");
+
+                    b.Property<string>("ClosedDate");
+
+                    b.Property<string>("Information");
+
+                    b.Property<string>("OrderId");
+
+                    b.Property<int>("Price");
+
+                    b.Property<string>("ProviderId");
+
+                    b.Property<string>("ServicerId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payment");
+                });
+
             modelBuilder.Entity("wetest.Models.models.UserInfo", b =>
                 {
                     b.Property<string>("Id")

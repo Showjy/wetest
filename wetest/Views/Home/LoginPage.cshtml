@@ -65,14 +65,26 @@
         var password = document.getElementById("password2").value;
         var confirmpassword = document.getElementById("confirmpassword").value;
         if (username == "" || password == "" || confirmpassword == "") {
-            alert("please input all information requested!");
+            alert("请输入所需信息！");
 
         }
         else if (password != confirmpassword) {
-            alert("please confirm password!");
+            alert("两次密码输入不一致！");
         }
         else {
             var temp = postuser("http://localhost:54378/Users/Create", username, password);
+        }
+
+        if (temp == "result=\"CreateUserSuccess\"") {
+
+            login_btn();
+            document.getElementById("username").value = username;
+            document.getElementById("password").value = password;
+        }
+        else if (temp == "result=\"ExistUser\""){
+            
+            alert("注册失败！账号已存在");
+
         }
         
     }
@@ -82,7 +94,7 @@
         var password = document.getElementById("password").value;
         var confirmpassword = document.getElementById("confirmpassword").value;
         if (username == "" || password == "") {
-            alert("please input all information requested!");
+            alert("请输入账号密码！");
 
         }
         else {
@@ -91,7 +103,11 @@
 
         if (temp == "result=\"LoginSuccess\"") {
 
-            window.location.href="http://localhost:54378/Home/BuyerPage";
+            window.location.href = "http://localhost:54378/Home/BuyerPage";
+        }
+        else {
+            alert("登录失败，账号或密码错误！");
+
         }
         
     }
@@ -104,8 +120,10 @@
     <div class="container">
         <div class="form row">
             <div class="form-horizontal col-md-offset-3" id="login_form">
-                <button class="form-title" onclick="login_btn()">登录</button>
-                <button class="form-title" onclick="regist_btn()">注册</button>
+                <div style="left:50px;top:8px;position:relative;">
+                     <button class="btn btn-default form-title" onclick="login_btn()">登录</button>
+                     <button class="btn btn-default form-title" onclick="regist_btn()">注册</button>
+                </div>
                 <div class="col-md-9 login" style="display:inline;" id="login">
                     <div class="form-group">
                         <i class="fa fa-user fa-lg"></i>

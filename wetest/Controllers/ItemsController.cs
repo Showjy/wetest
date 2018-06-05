@@ -42,6 +42,14 @@ namespace wetest.Controllers
                 return NotFound();
             }
 
+            var contacts = (from p in _context.UserToItem
+                            from t in _context.UserInfo
+                            where p.ItemId == id && p.SellerId == t.Id
+                            select t);
+            var contact = contacts.FirstOrDefault();
+            ViewData["PhoneNumber"] = contact.PhoneNumber;
+            ViewData["Email"] = contact.Email;
+        
             return View(item);
         }
 

@@ -1,7 +1,7 @@
 ﻿body {
     height: 100%;
     width: 100%;
-    background: url("../images/002.jpg");
+    background: url("../images/002.png");
     animation-name: myfirst;
     animation-duration: 6s;
     /*变换时间*/
@@ -15,19 +15,19 @@
 
 @keyframes myfirst {
     0% {
-        background: url("../images/002.jpg")repeat 0px 0px;
+        background: url("../images/002.png");
     }
 
     34% {
-        background: url("../images/004.jpg")repeat 0px 0px;
+        background: url("../images/004.png");
     }
 
     67% {
-        background: url("../images/002.jpg")repeat 0px 0px;
+        background: url("../images/002.png");
     }
 
     100% {
-        background: url("../images/004.jpg")repeat 0px 0px;
+        background: url("../images/004.png");
     }
 }
 

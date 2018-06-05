@@ -9,31 +9,76 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Details</title>
 </head>
 <body>
 
-<div>
-    <h4>Item</h4>
+
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="">需求详情</a>
+            </li>                      
+        </ul>
+    </div>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Information)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Information)
-        </dd>
-    </dl>
-</div>
-<div>
-    <button href="/Orders/CreateOrder/@Model.Id">领取</button>
-    <button href="/Home/BuyerPage">返回</button>
-</div>
+    <div class="row" style="display:flex;justify-content:center">
+
+        <table class="table table-bordered" style="width:40%;border:solid;border-color:gainsboro;background-color:ghostwhite;">
+            <tr>
+                <td class="col-md-4">
+                    需求名称
+                </td>
+                <td class="col-md-6">
+                    @Html.DisplayFor(model => model.Title)
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    发布日期
+                </td>
+                <td class="col-md-6">
+                    日期
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    联系电话
+                </td>
+                <td class="col-md-6">
+                    @ViewData["PhoneNumber"]
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    联系邮箱
+                </td>
+                <td class="col-md-6">
+                    @ViewData["Email"]
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    需求详细
+                </td>
+                <td class="col-md-6">
+                    @Html.DisplayFor(model => model.Information)
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button class="btn"onclick="window.location.href='/Orders/CreateOrder/@Model.Id'" style="justify-content:center">领取</button>
+        </div>
+        <div>
+            <button class="btn" onclick="window.location.href='/Home/BuyerPage'" style="justify-content:center">返回</button>
+        </div>
+        
+    </div>
+
 </body>
 </html>

@@ -27,7 +27,7 @@ namespace wetest
         {
             services.AddMvc();
             services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>

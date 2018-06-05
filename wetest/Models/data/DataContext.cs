@@ -18,6 +18,7 @@ namespace wetest.Models
         public DbSet<wetest.Models.Order> Orders{ get; set; }
         public DbSet<wetest.Models.models.UserInfo> UserInfo { get; set; }
         public DbSet<wetest.Models.relatmodels.UserToItem> UserToItem { get; set; }
-        public DbSet<wetest.Models.relatmodels.UserToOrder> UserToOrder { get; set; }
-}
+        public DbSet<wetest.Models.relatmodels.UserToOrder> UserToOrder { get; set; }       
+        public DbSet<wetest.Models.models.Payment> Payment { get; set; }
+    }
 }

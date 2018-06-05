@@ -11,15 +11,20 @@
     <meta name="viewport" content="width=device-width" />
     <title>ShowMyOrders</title>
     <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/css/BuyerPage.css">
     <script>
         function receive_btn() {
             document.getElementById("receive").style.display = "inline";
             document.getElementById("provide").style.display = "none";
+
         }
         function provide_btn() {
             document.getElementById("receive").style.display = "none";
             document.getElementById("provide").style.display = "inline";
+
         }
 
         function change_progress(event) {
@@ -34,15 +39,12 @@
                     Progress: progress
                 },
                 success: function (json) {
-                    console.log(json)
-                    if (json == "result=\"ModProgressSuccess\"") {
-                        window.location.href = "http://localhost:54378/Order/ShowMyOrder";
+                    if (json == "result=\"ChangeProgressSuccess\"") {
+                        location.reload();
                     }
-                },
-                fail: function () {
-
                 }
-            });          
+                
+            });
         }
 
 
@@ -60,7 +62,7 @@
                 success: function (json) {
                     console.log(json)
                     if (json == "result=\"RefuseOrderSuccess\"") {
-                        window.location.href = "http://localhost:54378/Order/ShowMyOrder";
+                        location.reload();
                     }
                 },
                 fail: function () {
@@ -84,7 +86,7 @@
                 success: function (json) {
                     console.log(json)
                     if (json == "result=\"AcceptOrderSuccess\"") {
-                        window.location.href = "http://localhost:54378/Order/ShowMyOrder";
+                        location.reload();
                     }
                 },
                 fail: function () {
@@ -107,7 +109,7 @@
                 success: function (json) {
                     console.log(json)
                     if (json == "result=\"FinishOrderSuccess\"") {
-                        window.location.href = "http://localhost:54378/Order/ShowMyOrder";
+                        location.reload();
                     }
                 },
                 fail: function () {
@@ -125,86 +127,175 @@
     </script>
 </head>
 <body>
-    <button onclick="receive_btn()">接收的项目</button>
-    <button onclick="provide_btn()">发起的项目</button>
-    <div id="receive" style="display:inline;">
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li class="" id="mainpage">
+                <a href="/Home/BuyerPage">主页</a>
+            </li>
+            <li class="" id="receivebar">
+                <a onclick="receive_btn()">接收的项目</a>
+            </li>
+            <li class="" id="providebar">
+                <a onclick="provide_btn()">发起的项目</a>
+            </li>
+
+
+            <li class="dropdown pull-right">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle">我的详情<strong class="caret"></strong></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/UserInfoes/CurrentUser">个人信息</a>
+                    </li>
+                    <li>
+                        <a href="/UserInfoes/ChangePassword">修改密码</a>
+                    </li>
+
+                    <li class="divider">
+                    </li>
+                    <li>
+                        <a href="/Users/Logout">退出登录</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="" id="receive" style="display:inline;">
         <a>是我接收的项目，我收钱</a>
         @foreach (var item in Model)
         {
-            
-           if (item.ServicerId == (string)ViewData["MyId"])
-           {
-                <div class="items">
-                    <div class="item">
-                        <h4 class="title">@Html.DisplayFor(modelItem => item.Status)</h4>
-                        <h5 class="information"> @Html.DisplayFor(modelItem => item.StartDate)</h5>
-                        <h5 class=""> @Html.DisplayFor(modelItem => item.EndDate)</h5>
-                        <h5 class=""> @Html.DisplayFor(modelItem => item.Price)</h5>
-                        <h5 class=""> @Html.DisplayFor(modelItem => item.progress)</h5>
-                        <h5 class=""> @Html.DisplayFor(modelItem => item.Information)</h5>
-                        @if(@item.Status == "open"){
-                        <div>
-                        
-                            <h5>修改进度</h5>
-                        
-                            <select id="select_@item.Id">
-                                <option value="0">0%</option>
-                                <option value="20">20%</option>
-                                <option value="40">40%</option>
-                                <option value="60">60%</option>
-                                <option value="80">80%</option>
-                                <option value="100">100%</option>
-                            </select>
-                        <button id="@item.Id" onclick="change_progress(event)">修改</button>
+
+            if (item.ServicerId == (string)ViewData["MyId"])
+            {
+                <div class="row" style="border:solid;border-color:darkgray;margin:10px 10px 10px 10px;">
+                    <div class="col-md-8">
+                        <h2>
+                            订单编号：@Html.DisplayFor(modelItem => item.Id)
+                        </h2>
+                        <p>
+                            订单状态：@Html.DisplayFor(modelItem => item.Status)
+                        </p>
+                        <p>
+                            价格：@Html.DisplayFor(modelItem => item.Price) 元
+                        </p>
+                        <p>
+                            开始日期：@Html.DisplayFor(modelItem => item.StartDate)  截止日期：@Html.DisplayFor(modelItem => item.EndDate)
+                        </p>
+
+
+                        @if (@item.Status == "open")
+                        {
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.progress%" aria-valuenow="@item.progress" aria-valuemin="0" aria-valuemax="100">@item.progress%</div>
                         </div>
+                            <div>
+
+                                <h5>修改进度</h5>
+
+                                <select id="select_@item.Id">
+                                    <option value="0">0%</option>
+                                    <option value="20">20%</option>
+                                    <option value="40">40%</option>
+                                    <option value="60">60%</option>
+                                    <option value="80">80%</option>
+                                    <option value="100">100%</option>
+                                </select>
+                                <button class="btn" id="@item.Id" onclick="change_progress(event)">修改</button>
+                            </div>
                         }
                     </div>
+                    <div class="col-md-4">
+                        <div class="accordion" id="accordion-@item.Id">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-@item.Id" href="#accordion-element-@item.Id">详细要求</a>
+                                </div>
+                                <div id="accordion-element-@item.Id" class="accordion-body collapse in">
+                                    <div class="accordion-inner">
+                                        @Html.DisplayFor(modelItem => item.Information)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
             }
 
 
-         }
+        }
     </div>
 
     <div id="provide" style="display:none;">
         <a>是我发起的项目，我付钱</a>
         @foreach (var item in Model)
-    {
-
-        if (item.ProviderId == (string)ViewData["MyId"])
         {
-            <div class="items">
-                <div class="item">
-                    <h4 class="title">@Html.DisplayFor(modelItem => item.Status)</h4>
-                    <h5 class="information"> @Html.DisplayFor(modelItem => item.StartDate)</h5>
-                    <h5 class=""> @Html.DisplayFor(modelItem => item.EndDate)</h5>
-                    <h5 class=""> @Html.DisplayFor(modelItem => item.Price)</h5>
-                    <h5 class=""> @Html.DisplayFor(modelItem => item.progress)</h5>
-                    <h5 class=""> @Html.DisplayFor(modelItem => item.Information)</h5>
-                    @if (@item.Status == "waiting")
-                    {
-                
-                        <div>
-                            <button id="accept_@item.Id" onclick="accept(event)">确认订单并支付</button>
-                            <button id="refuse_@item.Id" onclick="refuse(event)">拒绝订单</button>
+
+            if (item.ProviderId == (string)ViewData["MyId"])
+            {
+                <div class="row" style="border:solid;border-color:darkgray;margin:10px 10px 10px 10px;">
+                    <div class="col-md-8">
+                        <h2>
+                            订单编号：@Html.DisplayFor(modelItem => item.Id)
+                        </h2>
+                        <p>
+                            订单状态：@Html.DisplayFor(modelItem => item.Status)
+                        </p>
+                        <p>
+                            价格：@Html.DisplayFor(modelItem => item.Price) 元
+                        </p>
+                        <p>
+                            开始日期：@Html.DisplayFor(modelItem => item.StartDate)  截止日期：@Html.DisplayFor(modelItem => item.EndDate)
+                        </p>
+
+
+                        @if (@item.Status == "waiting")
+                        {
+
+                            <div>
+                                <button class="btn" id="accept_@item.Id" onclick="accept(event)">确认订单并支付</button>
+                                <button class="btn" id="refuse_@item.Id" onclick="refuse(event)">拒绝订单</button>
+                            </div>
+                        }
+                        @if (@item.Status == "open")
+                        {
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.progress%" aria-valuenow="@item.progress" aria-valuemin="0" aria-valuemax="100">@item.progress%</div>
+                            </div>
+                        }
+
+                        @if (@item.Status == "open" && @item.progress == 100)
+                        {
+                            <div>
+                                <button class="btn" id="finish_@item.Id" onclick="finish(event)">完成订单</button>
+                                <button class="btn" id="appeal_@item.Id" onclick="appeal(event)">申述</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        <div class="accordion" id="accordion-@item.Id">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-@item.Id" href="#accordion-element-@item.Id">详细要求</a>
+                                </div>
+                                <div id="accordion-element-@item.Id" class="accordion-body collapse in">
+                                    <div class="accordion-inner">
+                                        @Html.DisplayFor(modelItem => item.Information)
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    }
-
-                    @if (@item.Status == "open" && @item.progress==100)
-                    {
-                        <div>
-                            <button id="finish_@item.Id" onclick="finish(event)">完成订单</button>
-                            <button id="appeal_@item.Id" onclick="appeal(event)">申述</button>
-                        </div>
-                    }
-
-
+                    </div>
                 </div>
-            </div>
-    }
 
 
-}
+
+
+            }
+
+
+        }
     </div>
 </body>
 </html>

@@ -12,10 +12,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>TesterPage</title>
     <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="~/css/BuyerPage.css" rel="stylesheet" />
     <script>
 
-        function create_go() {           
+        function create_go() {
             var title = document.getElementById("title").value;
             var infor = document.getElementById("information").value;
             if (title == "" || infor == "") {
@@ -65,7 +68,7 @@
                 async: false,
                 dataType: "json",
                 data: {
-                    id:event.target.id
+                    id: event.target.id
                 },
                 success: function (json) {
                     console.log(json)
@@ -74,7 +77,7 @@
                 fail: function () {
 
                 }
-            });            
+            });
 
         }
 
@@ -84,29 +87,95 @@
     </script>
 </head>
 <body>
-    <h1>tester page!</h1>
-    <div class="create-mode">
-        <div class="form-group">
-            <i class="fa fa-user fa-lg"></i>
-            <input class="form-control required" placeholder="Title" id="title" autofocus="autofocus" maxlength="20" />
-        </div>
-        <div class="form-group">
-            <i class="fa fa-lock fa-lg"></i>
-            <input class="form-control required" placeholder="Infomation" id="information" />
-        </div>
-        <button onclick="create_go()">CreateItem</button>
+
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="http://localhost:54378/Home/BuyerPage">可接业务</a>
+            </li>
+            <li class="active">
+                <a href="http://localhost:54378/Home/TesterPage">我的需求</a>
+            </li>
+            <li>
+                <a href="/Orders/ShowMyOrders">订单历史</a>
+            </li>
+            <li class="dropdown pull-right">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle">我的详情<strong class="caret"></strong></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/UserInfoes/CurrentUser">个人信息</a>
+                    </li>
+                    <li>
+                        <a href="/UserInfoes/ChangePassword">修改密码</a>
+                    </li>
+
+                    <li class="divider">
+                    </li>
+                    <li>
+                        <a href="/Users/Logout">退出登录</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
-    @foreach (var item in Model)
-    {
-        <div class="items">
-            <div class="item">
 
-                <h4 class="title">@Html.DisplayFor(modelItem => item.Title)</h4>
-                <h5 class="information"> @Html.DisplayFor(modelItem => item.Information)</h5>
-                <button id="@item.Id" onclick="delete_item(event)" >delete</button>                
-            </div> 
+    <div class="row-fluid">
+        <div class="span6" style="margin:10px 10px 10px 10px;">
+            <fieldset>
+                <h3>新建需求</h3>
+                <input class="" placeholder="Title" id="title" autofocus="autofocus" maxlength="20" />
+                <div>
+                    <textarea class="" placeholder="Infomation" id="information" style="height:300px;width:50%;"></textarea>
+                </div>
+                <button class="btn" onclick="create_go()">创建</button>
+            </fieldset>
         </div>
-    }
+
+    </div>
+    <hr />
+    <h3 style="margin-left:10px">需求列表</h3>
+    <div>
+    <table class="table table-hover" style="width:100%;margin:10px 10px 10px 10px;">
+        <tr>
+            <td class="col-md-1">#</td>
+            <td class="col-md-2">需求名称</td>
+            <td class="col-md-2">发布日期</td>
+            <td class="col-md-5">详细需求</td>
+            <td class="col-md-2">删除需求</td>
+        </tr>
+        @{
+            var count = 1;
+
+        } 
+        @foreach (var item in Model)
+
+        {   
+        <tr>
+        <td class="col-md-1">@count</td>
+        @{
+            count = count + 1;
+         }
+        <td class="col-md-2"> @Html.DisplayFor(modelItem => item.Title)</td>
+        <td class="col-md-2"> 日期</td>
+        <td class="col-md-5">
+            <div class="accordion" id="accordion-@item.Id">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle collapsed" data-parent="#accordion-@item.Id" data-toggle="collapse" href="#accordion-element-@item.Id">详细需求</a>
+                            </div>
+                            <div class="accordion-body collapse" id="accordion-element-@item.Id">
+                                <div class="accordion-inner">
+                                    @Html.DisplayFor(modelItem => item.Information)
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+        </td>
+        <td class="col-md-2"> <button id="@item.Id" onclick="delete_item(event)" class="btn">删除任务</button></td>        
+        </tr>
+        }
+    </table>
+        </div>
 </body>
 </html>
