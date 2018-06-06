@@ -31,7 +31,7 @@ namespace wetest.Controllers
         public async Task<IActionResult> BuyerPage()
         {
             var validItem = (from p in _context.Items
-                             where p.status == "valid"
+                             where p.Status == "valid"
                              select p);
             return View(await validItem.ToListAsync());
         }
@@ -43,7 +43,7 @@ namespace wetest.Controllers
             
             var items = (from t in _context.Items 
                          from p in _context.UserToItem                         
-                         where currentid == p.SellerId && p.ItemId==t.Id && t.status == "valid"
+                         where currentid == p.SellerId && p.ItemId==t.Id && t.Status == "valid"
                          select t);
             return View(await items.ToListAsync());
         }

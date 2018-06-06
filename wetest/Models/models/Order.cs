@@ -21,7 +21,7 @@ namespace wetest.Models
 
         public string Information { get; set; }//需求
 
-        public int progress { get; set; }//进度 0-100  
+        public int Progress { get; set; }//进度 0-100  
 
         public string Status { get; set; }//订单状态  waiting open closed finished
     }

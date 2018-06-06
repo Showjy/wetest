@@ -43,10 +43,10 @@ namespace wetest.Controllers
             var password = (from p in _context.Users
                            where p.Name == userLogin.Name
                            select p.Password);
-            var ids = (from p in _context.Users
+            var users = (from p in _context.Users
                             where p.Name == userLogin.Name
-                            select p.Id);
-            string id = ids.FirstOrDefault();
+                            select p);
+            string id = users.FirstOrDefault().Id;
             if (password.Count()==1)
             {
                 if (password.Contains(userLogin.Password))
@@ -68,7 +68,15 @@ namespace wetest.Controllers
                             scheme: CookieAuthenticationDefaults.AuthenticationScheme,
                             principal: principal
                             );
-                    return Json("result=\"LoginSuccess\"");
+                    int lv = users.FirstOrDefault().Level;
+                    if (lv == 1||lv==0)
+                    {
+                        return Json("result=\"ManagerLoginSuccess\"");
+                    }
+                    else 
+                    {
+                        return Json("result=\"UserLoginSuccess\"");
+                    }
                 }
                 else {
                     return Json("result=\"NoSuchUser\"");
@@ -111,7 +119,7 @@ namespace wetest.Controllers
 
         // POST: Users/Create
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name,Password")] Models.viewmodels.UserRegistViewModel userRegist)
+        public async Task<IActionResult> Create([Bind("Name,Password,Level")] Models.viewmodels.UserRegistViewModel userRegist)
         {
            
             User user = new User();
@@ -128,6 +136,7 @@ namespace wetest.Controllers
                     user.Id = id;
                     user.Name = userRegist.Name;
                     user.Password = userRegist.Password;
+                    user.Level = userRegist.Level;
                     _context.Add(user);
                     
 
@@ -260,5 +269,43 @@ namespace wetest.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+
+
+
+
+
+
+
+
+
+
+        
+        public async Task<IActionResult> ManagerIndex()
+        {
+            return View(await _context.Users.ToListAsync());
+        }
+
+
+        public async Task<IActionResult> ItemIndex()
+        {
+            return View(await _context.Items.ToListAsync());
+        }
+
+        public async Task<IActionResult> OrderIndex()
+        {
+            return View(await _context.Orders.ToListAsync());
+        }
+
+        public async Task<IActionResult> AppealIndex()
+        {
+            return View(await _context.Orders.ToListAsync());
+        }
+
+        
+
+
+
+
     }
 }

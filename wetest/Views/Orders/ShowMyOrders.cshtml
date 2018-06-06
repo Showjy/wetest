@@ -119,11 +119,7 @@
         }
 
 
-        function appeal(event) {
-            var str = event.target.id;
-            id = str.substring(7, 15);
-
-        }
+        
     </script>
 </head>
 <body>
@@ -186,7 +182,7 @@
                         @if (@item.Status == "open")
                         {
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.progress%" aria-valuenow="@item.progress" aria-valuemin="0" aria-valuemax="100">@item.progress%</div>
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.Progress%" aria-valuenow="@item.Progress" aria-valuemin="0" aria-valuemax="100">@item.Progress%</div>
                         </div>
                             <div>
 
@@ -261,15 +257,22 @@
                         @if (@item.Status == "open")
                         {
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.progress%" aria-valuenow="@item.progress" aria-valuemin="0" aria-valuemax="100">@item.progress%</div>
+                                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.Progress%" aria-valuenow="@item.Progress" aria-valuemin="0" aria-valuemax="100">@item.Progress%</div>
                             </div>
                         }
 
-                        @if (@item.Status == "open" && @item.progress == 100)
+                        @if (@item.Status == "open" && @item.Progress == 100)
                         {
                             <div>
                                 <button class="btn" id="finish_@item.Id" onclick="finish(event)">完成订单</button>
-                                <button class="btn" id="appeal_@item.Id" onclick="appeal(event)">申述</button>
+                                <button class="btn" id="appeal_@item.Id" onclick="window.location.href='/Appeals/OrderAppeal/@item.Id'">申述</button>
+                            </div>
+                        }                    
+                        @if (item.Status == "appeal")
+                        {
+
+                            <div>
+                                <h4>正在申诉中，请注意工作人员联系...</h4>
                             </div>
                         }
                     </div>

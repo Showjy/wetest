@@ -1,0 +1,79 @@
+﻿@model IEnumerable<wetest.Models.User>
+@{
+    Layout = null;
+}
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Index</title>
+</head>
+<body>
+
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="/Manage/Index">管理名单</a>
+            </li>
+            <li>
+                <a href="/Manage/ItemIndex">需求列表</a>
+            </li>
+            <li>
+                <a href="/Manage/OrderIndex">订单列表</a>
+            </li>
+            <li>
+                <a href="/Manage/AppealIndex">申述列表</a>
+            </li>
+            <li class="pull-right">
+                <a href="/Users/Logout">退出登录</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="row-fluid">
+        <div class="span6" style="margin:10px 10px 10px 10px;">
+            
+                <h3>创建管理员账号</h3>
+                <input class="" placeholder="name" id="name" autofocus="autofocus" maxlength="20" />
+                <input type="password" placeholder="password" id="password" autofocus="autofocus" maxlength="20" />
+                <button class="btn" onclick="create_go()">创建</button>
+            
+        </div>
+
+    </div>
+
+    <h3 style="margin-left:10px">人员列表</h3>
+    <div>
+        <table class="table table-hover" style="width:100%;margin:10px 10px 10px 10px;">
+            <tr>
+                <td class="col-md-1">#</td>
+                <td class="col-md-2">管理员名称</td>
+                <td class="col-md-2">管理员等级</td>
+            </tr>
+            @{
+                var count = 1;
+
+            }
+            @foreach (var item in Model)
+
+            {
+                <tr>
+                    <td class="col-md-1">@count</td>
+                    @{
+                        count = count + 1;
+                    }
+                    <td class="col-md-2"> @Html.DisplayFor(modelItem => item.Name)</td>
+                    <td class="col-md-2"> @Html.DisplayFor(modelItem => item.Level)</td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

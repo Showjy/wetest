@@ -112,7 +112,7 @@ namespace wetest.Controllers
                          where p.Id == orderProgress.Id
                          select p);
             var order = orders.First();
-            order.progress = orderProgress.Progress;
+            order.Progress = orderProgress.Progress;
             await _context.SaveChangesAsync();
             return Json("result=\"ChangeProgressSuccess\"");
         }
@@ -144,7 +144,7 @@ namespace wetest.Controllers
                              select p).Count();
                 string id = functions.Functions.ChangeCounttoId((long)count + 1);
                 order.Id = id;
-                order.progress = 0;
+                order.Progress = 0;
                 order.Status = "waiting";
                 order.ProviderId = createOrder.ProviderId;
                 order.ServicerId = User.Identity.Name;

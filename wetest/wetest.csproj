@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Users\" />
     <Folder Include="wwwroot\data\" />
   </ItemGroup>
 

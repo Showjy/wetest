@@ -11,6 +11,5 @@ namespace wetest.Models.relatmodels
         public string SellerId { get; set; }
         public string BuyerId { get; set; }
         public string OrderId { get; set; }
-
     }
 }

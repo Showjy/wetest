@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="~/css/LoginPage.css">
 
     <script>
-        function postuser(URL, username, password){
+        function loginuser(URL, username, password){
             var result;
             $.ajax({  
                 type: "Post",
@@ -24,11 +24,34 @@
                 dataType: "json",
                 data: {
                     Name: username,
-                    Password: password
+                    Password: password                   
                 },
                 success: function (json) {    
                     console.log(json)
                     result=json
+                },
+                fail: function () {
+
+                }
+            });
+            return result;
+        }
+
+        function postuser(URL, username, password) {
+            var result;
+            $.ajax({
+                type: "Post",
+                url: URL,
+                async: false,
+                dataType: "json",
+                data: {
+                    Name: username,
+                    Password: password,
+                    Level:2
+                },
+                success: function (json) {
+                    console.log(json)
+                    result = json
                 },
                 fail: function () {
 
@@ -98,12 +121,16 @@
 
         }
         else {
-            var temp = postuser("http://localhost:54378/Users/Login", username, password);
+            var temp = loginuser("http://localhost:54378/Users/Login", username, password);
         }
 
-        if (temp == "result=\"LoginSuccess\"") {
+        if (temp == "result=\"UserLoginSuccess\"") {
 
             window.location.href = "http://localhost:54378/Home/BuyerPage";
+        }
+        else if (temp == "result=\"ManagerLoginSuccess\"") {
+
+            window.location.href = "http://localhost:54378/Appeals/Index";
         }
         else {
             alert("登录失败，账号或密码错误！");

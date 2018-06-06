@@ -75,7 +75,8 @@ namespace wetest.Controllers
                 newItem.Id = id;
                 newItem.Title = item.Title;
                 newItem.Information = item.Information;
-                newItem.status = "valid";
+                newItem.Status = "valid";
+                newItem.Data = System.DateTime.Now.ToShortDateString();
                 _context.Add(newItem);
 
                 UserToItem uti = new UserToItem();
@@ -166,7 +167,7 @@ namespace wetest.Controllers
                          where id == p.Id
                          select p);
             var item = items.FirstOrDefault();
-            item.status = "Invalid";
+            item.Status = "Invalid";
             _context.SaveChanges();
             return Json("result=\"DeleteItemSuccess\"");
         }

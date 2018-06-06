@@ -25,15 +25,33 @@ namespace wetest.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Data");
+
                     b.Property<string>("Information");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Status");
 
-                    b.Property<string>("status");
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("wetest.Models.models.Appeal", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Date");
+
+                    b.Property<string>("Information");
+
+                    b.Property<string>("OrderId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Appeal");
                 });
 
             modelBuilder.Entity("wetest.Models.models.Payment", b =>
@@ -87,6 +105,8 @@ namespace wetest.Migrations
 
                     b.Property<long>("Price");
 
+                    b.Property<int>("Progress");
+
                     b.Property<string>("ProviderId");
 
                     b.Property<string>("ServicerId");
@@ -94,8 +114,6 @@ namespace wetest.Migrations
                     b.Property<string>("StartDate");
 
                     b.Property<string>("Status");
-
-                    b.Property<int>("progress");
 
                     b.HasKey("Id");
 
@@ -136,6 +154,8 @@ namespace wetest.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Level");
 
                     b.Property<string>("Name");
 

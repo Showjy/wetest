@@ -14,5 +14,7 @@ namespace wetest.Models.viewmodels
 
         [Required(ErrorMessage = "密码不能为空。")]
         public string Password { get; set; }
+
+        public int Level { get; set; }
     }
 }
