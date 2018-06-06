@@ -1,0 +1,111 @@
+﻿@model IEnumerable<wetest.Models.models.Appeal>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>ItemIndex</title>
+
+    <script>
+        function sign(event) {          
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:54378/Appeals/ChangeAppealStatus",
+                async: false,
+                dataType: "json",
+                data: {
+                    id: event.target.id                 
+                },
+                success: function (json) {
+                    if (json == "result=\"ChangeStatusSuccess\"") {
+                        location.reload();
+                    }
+                }
+
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="/Appeals/Index">管理员列表</a>
+            </li>
+            <li>
+                <a href="/Appeals/ItemIndex">需求列表</a>
+            </li>
+            <li>
+                <a href="/Appeals/OrderIndex">订单列表</a>
+            </li>
+            <li class="active">
+                <a href="/Appeals/AppealIndex">申述列表</a>
+            </li>
+            <li class="pull-right">
+                <a href="/Users/Logout">退出管理</a>
+            </li>
+
+        </ul>
+    </div>
+    <hr />
+    <h3 style="margin-left:10px">申述列表</h3>
+    <div>
+        <table class="table table-hover" style="width:100%;margin:10px 10px 10px 10px;">
+            <tr>
+                <td class="col-md-1">#</td>
+                <td class="col-md-3">争议订单编号</td>
+                <td class="col-md-3">申述日期</td>
+                <td class="col-md-3">申述理由</td>
+                <td class="col-md-2">处理状态</td>
+            </tr>
+            @{
+                var count = 1;
+
+            }
+            @foreach (var item in Model)
+
+            {
+                if (item.Status=="valid")
+                {
+                    <tr>
+                        <td class="col-md-1">@count</td>
+                        @{
+                            count = count + 1;
+                        }
+                        <td class="col-md-3"> @Html.DisplayFor(modelItem => item.OrderId)</td>
+                        <td class="col-md-3"> @Html.DisplayFor(modelItem => item.Date)</td>
+                        <td class="col-md-3">
+                            <div class="accordion" id="accordion-@item.Id">
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                        <a class="accordion-toggle collapsed" data-parent="#accordion-@item.Id" data-toggle="collapse" href="#accordion-element-@item.Id">申述理由</a>
+                                    </div>
+                                    <div class="accordion-body collapse" id="accordion-element-@item.Id">
+                                        <div class="accordion-inner">
+                                            @Html.DisplayFor(modelItem => item.Information)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-md-2">
+
+                            <button class="btn" id="@item.Id"onclick="sign(event)">标记已处理</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+﻿@model IEnumerable<wetest.Models.User>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Index</title>
+
+
+    <script>
+        function regist_go() {
+            var username = document.getElementById("name").value;
+            var password = document.getElementById("password").value;           
+            if (username == "" || password == "" ) {
+                alert("请输入所需信息！");
+
+            }            
+            else {
+                var temp = postuser("http://localhost:54378/Users/Create", username, password);
+            }
+
+            if (temp == "result=\"CreateUserSuccess\"") {
+                alert("添加成功");
+            }
+            else if (temp == "result=\"ExistUser\"") {
+
+                alert("添加失败！账号已存在");
+
+            }
+
+        }
+
+        function postuser(URL, username, password) {
+            var result;
+            $.ajax({
+                type: "Post",
+                url: URL,
+                async: false,
+                dataType: "json",
+                data: {
+                    Name: username,
+                    Password: password,
+                    Level: 1
+                },
+                success: function (json) {
+                    console.log(json)
+                    result = json
+                },
+                fail: function () {
+
+                }
+            });
+            return result;
+        }
+
+
+        function edit(event) {
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:54378/Appeals/Edit",
+                async: false,
+                dataType: "json",
+                data: {
+                    id: event.target.id
+                },
+                success: function (json) {
+                    if (json == "result=\"EditSuccess\"") {
+                        location.reload();
+                    }
+                },
+                fail: function () {
+
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="/Appeals/Index">管理员列表</a>
+            </li>
+            <li>
+                <a href="/Appeals/ItemIndex">需求列表</a>
+            </li>
+            <li>
+                <a href="/Appeals/OrderIndex">订单列表</a>
+            </li>
+            <li>
+                <a href="/Appeals/AppealIndex">申述列表</a>
+            </li>
+            <li class="pull-right">
+                <a href="/Users/Logout">退出管理</a>
+            </li>
+
+        </ul>
+    </div>
+
+    @if ((int)@ViewData["UserLevel"] == 0)
+    {
+        <div class="row">
+            <div class="col-md-6" style="margin:10px 10px 10px 10px;">
+
+                <h3 style="margin-left:10px">添加管理员</h3>
+                <div>
+                    <input class="col-md-2" placeholder="name" id="name" autofocus="autofocus" maxlength="20" />
+                    <input class="col-md-2" type="password" placeholder="password" id="password" autofocus="autofocus" maxlength="20" />
+                    <button class="btn col-md-2" onclick="regist_go()">添加</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+
+
+    <h3 style="margin-left:10px">管理员列表</h3>
+    <div>
+        <table class="table table-hover" style="width:100%;margin:10px 10px 10px 10px;">
+            <tr>
+                <td class="col-md-1">#</td>
+                <td class="col-md-2">管理员名称</td>
+                <td class="col-md-2">管理员等级</td>
+                <td class="col-md-2">取消管理权限</td>
+            </tr>
+            @{
+                var count = 1;
+
+            }
+            @foreach (var item in Model)
+
+            {
+                <tr>
+                    <td class="col-md-1">@count</td>
+                    @{
+                        count = count + 1;
+                    }
+                    <td class="col-md-2"> @Html.DisplayFor(modelItem => item.Name)</td>
+                    <td class="col-md-2"> @Html.DisplayFor(modelItem => item.Level)</td>
+                    @if (item.Level == 1 && (int)@ViewData["UserLevel"] == 0)
+                    {
+                    <td class="col-md-2"> <button id="@item.Id" onclick="edit(event)" class="btn">取消管理权</button></td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

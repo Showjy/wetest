@@ -49,6 +49,8 @@ namespace wetest.Migrations
 
                     b.Property<string>("OrderId");
 
+                    b.Property<string>("Status");
+
                     b.HasKey("Id");
 
                     b.ToTable("Appeal");

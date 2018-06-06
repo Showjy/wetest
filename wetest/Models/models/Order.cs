@@ -23,6 +23,6 @@ namespace wetest.Models
 
         public int Progress { get; set; }//进度 0-100  
 
-        public string Status { get; set; }//订单状态  waiting open closed finished
+        public string Status { get; set; }//订单状态  waiting open closed finished appeal
     }
 }

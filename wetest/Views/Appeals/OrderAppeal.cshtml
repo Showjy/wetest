@@ -29,8 +29,8 @@
 
                 window.location.href = "http://localhost:54378/Orders/ShowMyOrders";
             }
-            else {
-                alert("申述失败！");
+            else if (temp == "result=\"AlreadyAppeal\""){
+                alert("该订单已申述！请勿重复操作");
             }
 
         }

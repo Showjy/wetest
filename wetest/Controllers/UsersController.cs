@@ -274,38 +274,5 @@ namespace wetest.Controllers
 
 
 
-
-
-
-
-
-
-        
-        public async Task<IActionResult> ManagerIndex()
-        {
-            return View(await _context.Users.ToListAsync());
-        }
-
-
-        public async Task<IActionResult> ItemIndex()
-        {
-            return View(await _context.Items.ToListAsync());
-        }
-
-        public async Task<IActionResult> OrderIndex()
-        {
-            return View(await _context.Orders.ToListAsync());
-        }
-
-        public async Task<IActionResult> AppealIndex()
-        {
-            return View(await _context.Orders.ToListAsync());
-        }
-
-        
-
-
-
-
     }
 }
